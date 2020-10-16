@@ -7,17 +7,24 @@ stages:
   - check
   - deploy
 
-create_users_check:
+check:
   stage: check
   script:
-    - ansible-playbook users.yml -C -D -i hosts
+    - ls -ld /builds/ && ls -l /builds/ && ls -l /builds/test
   tags:
     - users
 
-create_users:
-  stage: deploy
-  script:
-    - ansible-playbook users.yml -D -i hosts
-  when: manual
-  tags:
-    - users
+#create_users_check:
+#  stage: check
+#  script:
+#    - ansible-playbook users.yml -C -D -i hosts
+#  tags:
+#    - users
+
+#create_users:
+#  stage: deploy
+#  script:
+#    - ansible-playbook users.yml -D -i hosts
+#  when: manual
+#  tags:
+#    - users
