@@ -1,0 +1,13 @@
+---
+
+users:
+  test1:
+    name: test1
+    comment: John Doe
+    shell: /bin/bash
+    ssh_keys: "admin1@company1"
+  test2:
+    name: test2
+    comment: Mr Smith
+    shell: /bin/sh
+    ssh_keys: "admin2@company2"

@@ -1,0 +1,17 @@
+---
+
+- name: Create users
+  user:
+    name: "{{ item.value.name }}"
+    comment: "{{ item.value.comment }}"
+    shell: "{{ item.value.shell }}"
+  loop: "{{ lookup('dict', users) }}"
+  become: yes
+
+- name: Set authorized key taken from file
+  authorized_key:
+    user: "{{ item.value.name }}"
+    state: present
+    key: "{{ lookup('file', 'keys/{{ item.value.ssh_keys }}') }}"
+  loop: "{{ lookup('dict', users) }}"
+  become: yes
