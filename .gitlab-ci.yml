@@ -7,24 +7,22 @@ stages:
   - check
   - deploy
 
-check:
+#https://docs.ansible.com/ansible/devel/reference_appendices/config.html#cfg-in-world-writable-dir
+# in my gitlab-ce 12.9.2-ce.0 I have to do this "crutch"
+before_script:
+  - chmod 640 /builds/ && chmod 640 /builds/test/ && chmod 640 /builds/test/test_users/
+
+create_users_check:
   stage: check
   script:
-    - ls -ld /builds/ && ls -l /builds/ && ls -l /builds/test
+    - ansible-playbook users.yml -C -D -i hosts
   tags:
     - users
 
-#create_users_check:
-#  stage: check
-#  script:
-#    - ansible-playbook users.yml -C -D -i hosts
-#  tags:
-#    - users
-
-#create_users:
-#  stage: deploy
-#  script:
-#    - ansible-playbook users.yml -D -i hosts
-#  when: manual
-#  tags:
-#    - users
+create_users:
+  stage: deploy
+  script:
+    - ansible-playbook users.yml -D -i hosts
+  when: manual
+  tags:
+    - users
