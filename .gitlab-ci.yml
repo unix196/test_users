@@ -18,7 +18,7 @@ stages:
 #  tags:
 #    - ansible
 
-create_users:
+create_users_check:
   stage: check
   script:
     - ansible-playbook users.yml -C -D -i hosts
@@ -30,6 +30,5 @@ create_users:
   stage: deploy
   script:
     - ansible-playbook users.yml -D -i hosts
-  when: manual
   tags:
     - users
