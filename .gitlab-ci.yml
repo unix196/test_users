@@ -7,22 +7,10 @@ stages:
   - check
   - deploy
 
-#before_script:
-#  - chmod 640 /builds/ && chmod 640 /builds/alltel24/ && chmod 640 /builds/alltel24/admin/ && chmod 640 /builds/alltel24/admin/infrastructure
-#  - echo $PASS > .pass && chmod 600 .pass
-
-#ping_asterisk_hosts:
-#  stage: check
-#  script:
-#    - ansible -m ping asterisk
-#  tags:
-#    - ansible
-
 create_users_check:
   stage: check
   script:
     - ansible-playbook users.yml -C -D -i hosts
-  when: manual
   tags:
     - users
 
@@ -30,5 +18,6 @@ create_users:
   stage: deploy
   script:
     - ansible-playbook users.yml -D -i hosts
+  when: manual
   tags:
     - users
